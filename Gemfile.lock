@@ -55,6 +55,8 @@ GEM
       factory_girl (~> 4.8.0)
       railties (>= 3.0.0)
     ffi (1.9.18)
+    global (0.2.1)
+      activesupport (>= 2.0)
     globalid (0.4.0)
       activesupport (>= 4.2.0)
     i18n (0.8.6)
@@ -162,6 +164,7 @@ DEPENDENCIES
   byebug
   database_rewinder
   factory_girl_rails
+  global
   jbuilder (~> 2.5)
   listen (>= 3.0.5, < 3.2)
   pg (~> 0.18)
