@@ -12,6 +12,7 @@ RUN apk add --no-cache --update tzdata \
 #  Library
 #-----------------------------------------------
 RUN apk add --no-cache --update \
+  bash \
   build-base \
   postgresql-dev
 
