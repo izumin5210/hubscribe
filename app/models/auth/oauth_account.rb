@@ -37,5 +37,5 @@
 #
 
 class Auth::OauthAccount < ApplicationRecord
-  belongs_to :user
+  belongs_to :user, class_name: Auth::User.name
 end
