@@ -38,4 +38,26 @@
 
 class Auth::OauthAccount < ApplicationRecord
   belongs_to :user, class_name: Auth::User.name
+
+  def self.find_or_initialize_by_auth_params(params)
+    credentials = params['credentials']
+    info = params['info']
+    Auth::OauthAccount.find_or_initialize_by(
+      uid: params['uid'],
+      provider: params['provider']
+    ).tap do |oa|
+      oa.name = info['name']
+      oa.nickname = info['nickname']
+      oa.email = info['email']
+      case oa.provider
+      when 'github'
+        oa.url = info['urls']['GitHub']
+      end
+      oa.image_url = info['image']
+      oa.access_token = credentials['token']
+      oa.access_secret = credentials['secret']
+      oa.credentials = credentials.to_json
+      oa.raw_info = params['extra']['raw_info'].to_json
+    end
+  end
 end

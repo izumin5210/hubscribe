@@ -20,4 +20,19 @@
 
 class Auth::User < ::User
   has_many :oauth_accounts, class_name: Auth::OauthAccount.name
+
+  def self.find_or_create_by_auth_params!(params, user: nil)
+    ActiveRecord::Base.transaction do
+      oa = Auth::OauthAccount.find_or_initialize_by_auth_params(params)
+      (user&.becomes(Auth::User) || oa.user || Auth::User.new(login_name: oa.nickname)).tap do |u|
+        u.name ||= oa.name unless u.persisted?
+        u.save!
+        u.oauth_accounts << oa
+      end
+    end
+  rescue => e
+    e.record.errors.each do |attr, error|
+      errors.add(attr, error)
+    end
+  end
 end
