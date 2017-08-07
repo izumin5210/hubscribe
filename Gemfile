@@ -46,6 +46,9 @@ end
 
 group :test do
   gem 'database_rewinder'
+
+  gem 'rspec-its'
+  gem 'rspec-parameterized'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
