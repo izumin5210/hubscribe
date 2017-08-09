@@ -24,4 +24,5 @@
 #
 
 class Github::OwnerUser < ApplicationRecord
+  include RepositoryOwner
 end
