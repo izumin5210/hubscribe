@@ -1,6 +1,6 @@
 # ## Schema Information
 #
-# Table name: `github_owner_users`
+# Table name: `users`
 #
 # ### Columns
 #
@@ -14,15 +14,14 @@
 #
 # ### Indexes
 #
-# * `index_github_owner_users_on_login_name` (_unique_):
+# * `index_users_on_login_name` (_unique_):
 #     * **`login_name`**
 #
-# ### Foreign Keys
-#
-# * `fk_rails_...`:
-#     * **`login_name => github_login_names.id`**
-#
 
-class Github::OwnerUser < ApplicationRecord
-  include Github::RepositoryOwner
+class Github::Subscriber < ::User
+  has_many :subscriptions
+
+  def subscribe(repo)
+    subscriptions.create(repository: repo)
+  end
 end

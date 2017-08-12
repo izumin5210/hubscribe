@@ -26,6 +26,6 @@
 #
 
 class Github::Subscription < ApplicationRecord
-  belongs_to :repository, class_name: Github::Repository.name
-  belongs_to :subscriber, class_name: User.name
+  belongs_to :repository
+  belongs_to :subscriber
 end
