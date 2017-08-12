@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170811124437) do
+ActiveRecord::Schema.define(version: 20170811125910) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -66,10 +66,10 @@ ActiveRecord::Schema.define(version: 20170811124437) do
 
   create_table "github_subscriptions", force: :cascade do |t|
     t.integer "subscriber_id"
-    t.bigint "github_repository_id"
+    t.bigint "repository_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["github_repository_id"], name: "index_github_subscriptions_on_github_repository_id"
+    t.index ["repository_id"], name: "index_github_subscriptions_on_repository_id"
     t.index ["subscriber_id"], name: "index_github_subscriptions_on_subscriber_id"
   end
 
@@ -84,5 +84,5 @@ ActiveRecord::Schema.define(version: 20170811124437) do
   add_foreign_key "auth_oauth_accounts", "users"
   add_foreign_key "github_owner_organizations", "github_login_names", column: "login_name"
   add_foreign_key "github_owner_users", "github_login_names", column: "login_name"
-  add_foreign_key "github_subscriptions", "github_repositories"
+  add_foreign_key "github_subscriptions", "github_repositories", column: "repository_id"
 end
