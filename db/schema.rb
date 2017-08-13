@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170807125853) do
+ActiveRecord::Schema.define(version: 20170811125910) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,45 @@ ActiveRecord::Schema.define(version: 20170807125853) do
     t.index ["user_id"], name: "index_auth_oauth_accounts_on_user_id"
   end
 
+  create_table "github_login_names", id: :string, force: :cascade do |t|
+  end
+
+  create_table "github_owner_organizations", force: :cascade do |t|
+    t.string "login_name"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["login_name"], name: "index_github_owner_organizations_on_login_name", unique: true
+  end
+
+  create_table "github_owner_users", force: :cascade do |t|
+    t.string "login_name", null: false
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["login_name"], name: "index_github_owner_users_on_login_name", unique: true
+  end
+
+  create_table "github_repositories", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "owner_id"
+    t.string "owner_type"
+    t.index ["name"], name: "index_github_repositories_on_name"
+    t.index ["owner_id", "owner_type"], name: "index_github_repositories_on_owner_id_and_owner_type"
+    t.index ["owner_id"], name: "index_github_repositories_on_owner_id"
+  end
+
+  create_table "github_subscriptions", force: :cascade do |t|
+    t.integer "subscriber_id"
+    t.bigint "repository_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["repository_id"], name: "index_github_subscriptions_on_repository_id"
+    t.index ["subscriber_id"], name: "index_github_subscriptions_on_subscriber_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "login_name", null: false
     t.string "name", null: false
@@ -43,4 +82,7 @@ ActiveRecord::Schema.define(version: 20170807125853) do
   end
 
   add_foreign_key "auth_oauth_accounts", "users"
+  add_foreign_key "github_owner_organizations", "github_login_names", column: "login_name"
+  add_foreign_key "github_owner_users", "github_login_names", column: "login_name"
+  add_foreign_key "github_subscriptions", "github_repositories", column: "repository_id"
 end
