@@ -1,4 +1,4 @@
-FROM ruby:2.4.1-alpine
+FROM ruby:2.4.1-alpine3.6
 
 
 #  Timezone
@@ -14,7 +14,9 @@ RUN apk add --no-cache --update tzdata \
 RUN apk add --no-cache --update \
   bash \
   build-base \
-  postgresql-dev
+  postgresql-dev \
+  nodejs \
+  yarn
 
 
 #  App
