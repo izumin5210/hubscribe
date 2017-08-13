@@ -21,6 +21,9 @@
 class Github::Subscriber < ::User
   has_many :subscriptions
 
+  # Creates a new subscription to the given repository
+  # @param [Github::Repositroy] a reposiitory
+  # @return [Github::Subscription] a created subscription
   def subscribe(repo)
     subscriptions.create(repository: repo)
   end
