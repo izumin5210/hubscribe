@@ -39,6 +39,8 @@
 class Auth::OauthAccount < ApplicationRecord
   belongs_to :user, class_name: Auth::User.name
 
+  # @params params [Hashie::Mash] The auth params
+  # @return [Auth::OauthAccount] The first found or initialized record
   def self.find_or_initialize_by_auth_params(params)
     credentials = params['credentials']
     info = params['info']
