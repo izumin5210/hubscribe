@@ -21,6 +21,9 @@
 class Auth::User < ::User
   has_many :oauth_accounts, class_name: Auth::OauthAccount.name
 
+  # @params params [Hashie::Mash] The auth params
+  # @params user [Auth::User, nil] The current user
+  # @return [Auth::User] The first found or created record
   def self.find_or_create_by_auth_params!(params, user: nil)
     ActiveRecord::Base.transaction do
       oa = Auth::OauthAccount.find_or_initialize_by_auth_params(params)
