@@ -9,6 +9,7 @@ services:
     - tmp:/app/tmp
     - log:/app/log
     - bundle_install:/app/vendor/bundle
+    - node_modules:/app/node_modules
     ports:
     - 3000:3000
     extra_hosts:
@@ -24,3 +25,4 @@ volumes:
   tmp:
   log:
   bundle_install:
+  node_modules:
